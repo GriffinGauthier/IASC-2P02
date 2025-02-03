@@ -73,7 +73,9 @@ const ui = new dat.GUI()
 
 // UI Object
 const uiObject = {
-    speed: 1
+    speed: 1,
+    distance: 1,
+    rotation: 1
 }
 
 // Plane UI
@@ -87,11 +89,25 @@ planeFolder
 const boxFolder = ui.addFolder('Box')
 
 boxFolder
-    .add(uiObject, 'speed')
+.add(uiObject, 'speed')
     .min(0.1)
     .max(10)
     .step(0.1)
     .name('Speed')
+
+boxFolder
+.add(uiObject, 'distance')
+    .min(0.1)
+    .max(10)
+    .step(0.1)
+    .name('distance')
+
+boxFolder
+    .add(uiObject, 'rotation')
+    .min(0.1)
+    .max(10)
+    .step(0.1)
+    .name('Rotation')
 
 /*******************
 ** ANIMATION LOOP **
@@ -104,7 +120,8 @@ const animation = () =>
     const elapsedTime = clock.getElapsedTime()
 
     // Animate Box
-    box.rotation.y = elapsedTime * uiObject.speed
+    box.position.y = Math.sin(elapsedTime * uiObject.speed) * uiObject.distance
+    box.rotation.y = elapsedTime * uiObject.rotation
 
     // Update OrbitControls
     controls.update()
